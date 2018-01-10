@@ -29,7 +29,7 @@ public class FhirObservationParser {
         String comment;
 
 
-        System.out.println(node.toString());
+        //System.out.println(node.toString());
 
         String resourcetype = node.get("resourceType").asText();
         if (!resourcetype.equals("Observation"))
