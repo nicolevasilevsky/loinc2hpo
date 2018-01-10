@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.monarchinitiative.loinc2hpo.exception.Loinc2HpoException;
 import org.monarchinitiative.loinc2hpo.exception.MalformedHpoTermIdException;
+import org.monarchinitiative.loinc2hpo.exception.MalformedLoincScaleException;
 import org.monarchinitiative.loinc2hpo.loinc.LoincId;
 import org.monarchinitiative.loinc2hpo.loinc.LoincScale;
 import org.monarchinitiative.loinc2hpo.loinc.LoincTest;
@@ -142,10 +143,10 @@ public class LoincMappingParser {
                     TermId wnl = getHpoTermId(A[4]);
                     TermId high = getHpoTermId(A[5]);
                     String comment = (A.length>5 && A[5]!=null)? A[5]:"";
-                    if (loincScale.equals(LoincScale.Qn)) {
-                        LoincTest test = new QnLoincTest(id,LoincScale.Qn,low,wnl,high,flagval,comment);
+                    if (loincScale.equals(LoincScale.QUANTITATIVE)) {
+                        LoincTest test = new QnLoincTest(id,LoincScale.QUANTITATIVE,low,wnl,high,flagval,comment);
                         testset.add(test);
-                        qntests.add(new QnLoincTest(id,LoincScale.Qn,low,wnl,high));
+                        qntests.add(new QnLoincTest(id,LoincScale.QUANTITATIVE,low,wnl,high));
                         testmap.put(id,test);
                     } else {
 
@@ -165,10 +166,12 @@ public class LoincMappingParser {
     }
 
     LoincScale getScale(String sc) {
-        switch (sc) {
-            case "Qn": return LoincScale.Qn;
-            default: return LoincScale.Unknown;
+        try {
+            return LoincScale.string2enum(sc);
+        } catch (MalformedLoincScaleException e) {
+            e.printStackTrace();
         }
+        return null;// should never happen TODO pass on exception
     }
 
 

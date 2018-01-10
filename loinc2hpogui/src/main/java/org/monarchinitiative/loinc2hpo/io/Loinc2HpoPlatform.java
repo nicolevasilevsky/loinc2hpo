@@ -105,7 +105,7 @@ public class Loinc2HpoPlatform {
         LINUX("Linux"),
         WINDOWS("Windows"),
         OSX("Os X"),
-        UNKNOWN("Unknown");
+        UNKNOWN("UNKNOWN");
 
         private String name;
 

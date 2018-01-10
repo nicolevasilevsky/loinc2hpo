@@ -83,3 +83,4 @@ loinc2hpogui/target/maven-status/
 loinc2hpo-gui.iml
 loinc2hpogui/target/
 /loinc2hpogui/loinc2hpo-gui.iml
+!/data/loinc2hpo.tsv
